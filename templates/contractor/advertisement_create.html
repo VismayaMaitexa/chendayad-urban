@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Advertisement</title>
+
+    <!-- Include Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS for styling -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #132f4e;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #09407c;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        input, textarea, button {
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        input:focus, textarea:focus, button:focus {
+            outline: none;
+            border-color: #10447a;
+        }
+
+        button {
+            background-color: #10447a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            padding: 14px;
+        }
+
+        button:hover {
+            background-color: #09407c;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .back-link a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Create Advertisement</h1>
+    </header>
+
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Render form fields as paragraph elements -->
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit">Create Advertisement</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

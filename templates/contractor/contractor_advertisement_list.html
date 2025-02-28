@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Advertisements</title>
+
+    <!-- Internal CSS for styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #0c3560;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px 18px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #114072;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            padding: 5px 10px;
+            border: 1px solid #007BFF;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Manage Your Advertisements</h1>
+    </header>
+
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad in advertisements %}
+                    <tr>
+                        <td>{{ ad.title }}</td>
+                        <td>{{ ad.message }}</td>
+                        <td>{% if ad.is_approved %} Approved {% else %} Pending {% endif %}</td>
+                        <td class="actions">
+                            {% if not ad.is_approved %}
+                                <a href="{% url 'approve_advertisement' ad.id %}">Approve</a>
+                            {% else %}
+                                Approved
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;">No advertisements available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="back-link">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

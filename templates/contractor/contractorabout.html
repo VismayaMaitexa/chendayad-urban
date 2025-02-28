@@ -1,0 +1,118 @@
+<!-- contractorabout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Your Work</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+        p {
+            text-align: center;
+            color: #555;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #444;
+        }
+        .form-control, .form-control-file {
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            transition: border 0.3s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+        .error {
+            color: #d9534f;
+            font-size: 14px;
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Your Work</h1>
+        <p>Tell us more about your work and upload any relevant images. Your profile will be updated once you save it.</p>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_bio">Bio:</label>
+                <textarea name="bio" id="id_bio" class="form-control" rows="4" placeholder="Write about your work...">{{ form.bio.value }}</textarea>
+                {% if form.bio.errors %}
+                    <div class="error">
+                        {% for error in form.bio.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_workimage1">Work Image 1:</label>
+                <input type="file" name="workimage1" id="id_workimage1" class="form-control-file">
+                {% if form.workimage1.errors %}
+                    <div class="error">
+                        {% for error in form.workimage1.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_workimage2">Work Image 2:</label>
+                <input type="file" name="workimage2" id="id_workimage2" class="form-control-file">
+                {% if form.workimage2.errors %}
+                    <div class="error">
+                        {% for error in form.workimage2.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-custom">Save</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

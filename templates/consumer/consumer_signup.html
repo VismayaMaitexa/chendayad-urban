@@ -1,0 +1,230 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Local Service Job Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .container h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #052e51;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .button input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #28a745;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button input:hover {
+            background: #218838;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .register a {
+            color: #052e51;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+        <form id="signupForm" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    {% render_field userform.first_name class='input' %}
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    {% render_field userform.last_name class='input' %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                {% render_field userform.username class='input' %}
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                {% render_field userform.password class='input' %}
+                <p class="error-message" id="passwordError">Password must be at least 8 characters, include a number, and a special character.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="profilepic">Profile Picture</label>
+                {% render_field consumerform.profile_pic class='input' %}
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                {% render_field consumerform.phone id="phone" class='input' %}
+                <p class="error-message" id="phoneError">Phone number must be exactly 10 digits.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                {% render_field consumerform.email class='input' %}
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                {% render_field consumerform.address class='input' %}
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                {% render_field consumerform.pincode id="pincode" class='input' %}
+                <p class="error-message" id="pinError">Pincode must be exactly 6 digits.</p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    {% render_field consumerform.city class='input' %}
+                </div>
+                <div class="form-group">
+                    <label for="district">District</label>
+                    {% render_field consumerform.district class='input' %}
+                </div>
+            </div>
+
+            <div class="button">
+                <input type="submit" value="Register">
+            </div>
+
+            <div class="register">
+                <p>Already have an account? <a href="{% url 'consumerlogin' %}">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            const phoneInput = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+            const pinInput = document.getElementById('pincode');
+            const pinError = document.getElementById('pinError');
+            const passwordInput = document.querySelector('[name="password"]');
+            const passwordError = document.getElementById('passwordError');
+
+            let valid = true;
+
+            // Phone number validation
+            if (!/^\d{10}$/.test(phoneInput.value)) {
+                phoneError.style.display = 'block';
+                valid = false;
+            } else {
+                phoneError.style.display = 'none';
+            }
+
+            // Pincode validation
+            if (!/^\d{6}$/.test(pinInput.value)) {
+                pinError.style.display = 'block';
+                valid = false;
+            } else {
+                pinError.style.display = 'none';
+            }
+
+            // Password validation: At least 8 characters, one number, one special character
+            const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+            if (!passwordPattern.test(passwordInput.value)) {
+                passwordError.style.display = 'block';
+                valid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

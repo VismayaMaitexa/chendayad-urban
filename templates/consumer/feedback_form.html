@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Feedback</title>
+    <!-- Bootstrap CSS for basic styling -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styling */
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4e49d1;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4e49d1;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e38b0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 1rem;
+            color: #6c757d;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Your Feedback</h1>
+        <p>Your feedback is important to us!</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                <input type="text" id="id_name" name="name" value="{{ form.name.value }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_message">Feedback Message:</label>
+                <textarea id="id_message" name="message" rows="4" required>{{ form.message.value }}</textarea>
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <div class="footer">
+            <p>&copy; 2025 Your Company Name</p>
+        </div>
+    </div>
+</body>
+</html>

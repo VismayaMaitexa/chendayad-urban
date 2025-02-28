@@ -1,0 +1,162 @@
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <title>Local Service Job Portal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .form-body {
+            background-color: rgb(199, 193, 193);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-body h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-body label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            width: 100%;
+        }
+
+        .input {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .btn button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .btn button:hover {
+            background-color: #218838;
+        }
+
+        .required {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-body">
+            <form action="{% url 'payment-success' %}" method="post">
+                {% csrf_token %}
+                <h2>Details</h2>
+
+                <label for="card_number">Email <span class="required">*</span>:</label>
+                <input type="email" name="card_number" id="card_number" class="input" placeholder="Enter Email" required>
+
+                <label for="expiry_date">Service Date <span class="required">*</span>:</label>
+                <input type="date" name="order_date" id="expiry_date" class="input" required>
+
+                <label for="rate">Alternate Number <span class="required">*</span>:</label>
+                <input type="tel" name="rate" id="rate" class="input" placeholder="Enter Mobile" required>
+
+                <div class="btn">
+                    <button type="submit">Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("expiry_date").addEventListener("change", function () {
+            let date = new Date(this.value);
+            let formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            this.value = formattedDate;
+        });
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            let today = new Date();
+            let formattedDate = today.toISOString().split("T")[0];
+    
+            let dateInput = document.getElementById("expiry_date");
+            dateInput.setAttribute("min", formattedDate);
+    
+            dateInput.addEventListener("change", function () {
+                if (this.value < formattedDate) {
+                    alert("Please select a valid date from today onwards.");
+                    this.value = formattedDate;
+                }
+            });
+        });
+
+        // Mobile Number Validation - Exactly 10 Digits
+        document.getElementById("rate").addEventListener("input", function (e) {
+            let mobileInput = e.target;
+            mobileInput.value = mobileInput.value.replace(/\D/g, ''); // Allow only digits
+
+            if (mobileInput.value.length > 10) {
+                mobileInput.value = mobileInput.value.slice(0, 10); // Limit input to 10 digits
+            }
+        });
+
+        document.querySelector("form").addEventListener("submit", function (e) {
+            let mobileInput = document.getElementById("rate").value;
+            
+            if (mobileInput.length !== 10) {
+                e.preventDefault();
+                alert("Mobile number must be exactly 10 digits.");
+            }
+        });
+    </script>
+    
+</body>
+</html>

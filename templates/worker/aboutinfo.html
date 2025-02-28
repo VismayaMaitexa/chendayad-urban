@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            border-bottom: 4px solid #5a0fc8;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+        .section h2 {
+            color: #6a11cb;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #6a11cb;
+        }
+        .bio {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #6a11cb;
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .gallery-item {
+            flex: 1 1 calc(50% - 15px);
+            max-width: 300px;
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .gallery-item img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+        .gallery-item p {
+            font-weight: bold;
+            color: #444;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>About & Gallery</header>
+    <main>
+        <section class="section">
+            <h2>About</h2>
+            <h1>{{about.worker  }}</h1>
+            <div class="profile-container">
+                <div>
+                    <p><strong>Name:</strong> {{ about.worker.user.username }}</p>
+                    <p><strong>Minimum Service Rate:</strong> ${{ about.worker.service_rate }}</p>
+                    <p><strong>Skills:</strong> {{ about.worker.skills }}</p>
+                </div>
+            </div>
+            <h4 class="bio">"{{ about.bio }}"</h4>
+        </section>
+        
+        <section class="section">
+            <h2>Previous Works</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="{{about.workimage1.url}}" alt="Work Image 1">
+                    <p>Project 1</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="{{about.workimage2.url}}" alt="Work Image 2">
+                    <p>Project 2</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

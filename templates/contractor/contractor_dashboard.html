@@ -1,0 +1,196 @@
+
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <title>Contractor Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: row;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            background-color: rgb(23, 104, 96);
+            position: fixed;
+            z-index: 10;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        nav a {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            text-decoration: none;
+            margin-right: auto;
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+        }
+        .nav-item a {
+            font-weight: normal;
+            margin-left: 35px;
+            color: white;
+        }
+        .leftbar {
+            background-color: #1e7067;
+            width: 17vw;
+            height: 100vh;
+            padding-top: 100px;
+            position: fixed;
+        }
+        .leftbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .left {
+            display: flex;
+            flex-direction: column;
+        }
+        .left li {
+            text-align: center;
+            margin: 0;
+            border-bottom: 2px solid #ed8b0a;
+            transition: background-color 0.3s;
+        }
+        .left li:hover {
+            background-color: #ff9419;
+        }
+        .left li:last-child {
+            border-bottom: none;
+        }
+        .leftbar a {
+            color: #69686a;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 4px;
+            padding: 15px 25px;
+        }
+        .left a.active {
+            color: black;
+        }
+        .left a:hover {
+            background-color: rgba(237, 86, 59, 0.1);
+            color: #ed563b;
+        }
+        .card {
+            margin-left: 30vw;
+            margin-top: 130px;
+            width: 40%;
+            height: 72%;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .form-body {
+            width: 70%;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .button {
+            margin-top: 10px;
+            margin-left: 40%;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #ff9f01;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href=""><span>CONTRACTORDASHBOARD</span></a>
+            <div class="navbar">
+                <div class="nav-item"><a href="{% url 'home' %}">Logout</a></div>
+                <div class="nav-item"><a href=""><i class="fas fa-user-circle"></i></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="leftbar">
+        <ul class="left">
+            <li><a href="{% url 'contractor-dashboard' %}" class="active" style="color: white;">Home</a></li>
+            <li><a href="{% url 'cservices' %}" style="color: white;">Manage Services</a></li>
+            <li><a href="{% url 'advertisement_create' %}" style="color: white;">Advertisement</a></li>
+            <li><a href="{% url 'contractor-add-payment' %}" style="color: white;">AD Payment</a></li>
+            <li><a href="{% url 'all_consumers' contractor.id %}" style="color: white;">Chat</a></li>
+            <li><a href="{% url 'contractorabout' %}" style="color: white;">Bio</a></li>
+            <li><a href="{% url 'contractor-notifications' %}" style="color: white;">Emergency Notification</a></li>
+
+        </ul>
+    </div>
+   
+    <div class="card">
+        <h2>ADD SERVICES</h2>
+        <div class="form-body">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+    
+                <label for="profile">Service image:</label>
+                {% render_field serviceform.service_pic class='input' %}
+    
+                <label for="skills">Skills:</label>
+                {% render_field serviceform.skills class='input' %}
+    
+                <label for="city">City:</label>
+                {% render_field serviceform.city class='input' %}
+    
+                <label for="servicerate">Minimum Service Rate:</label>
+                {% render_field serviceform.service_rate class='input' %}
+    
+                <label for="phone">Phone:</label>
+                {% render_field serviceform.phone class='input' %}
+    
+                <div class="button">
+                    <input type="submit" value="Add" class="btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
